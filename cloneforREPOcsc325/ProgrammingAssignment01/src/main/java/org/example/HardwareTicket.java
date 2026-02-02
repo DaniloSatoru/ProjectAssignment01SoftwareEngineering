@@ -27,9 +27,21 @@ public class HardwareTicket extends Ticket {
     //   + (deviceType equalsIgnoreCase "Printer" ? 5 : 0)
     // Return the final score.
     // -----------------------------------------
-    @Override
+  @Override
     public int urgencyScore() {
-        // TODO #2
-        return -1;
+
+        int score = getPriority() * 10 + getDaysOpen() * 2;
+
+        if (labCritical) {
+            score += 20;
+        }
+
+        score += Math.min(affectedUsers, 30);
+
+        if (deviceType.equalsIgnoreCase("Printer")) {
+            score += 5;
+        }
+
+        return score;
     }
 }
