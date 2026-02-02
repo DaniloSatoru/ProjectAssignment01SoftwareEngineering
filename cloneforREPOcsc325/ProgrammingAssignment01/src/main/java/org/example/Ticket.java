@@ -32,25 +32,35 @@ public abstract class Ticket {
     //   base = (6 - priority) * 2 + daysOpen
     //   return max(1, base * complexityFactor + afterHoursPenalty)
     // -------------------------------
+ public int estimateResolutionHours() {
 
-    public int estimateResolutionHours() {
-        // TODO #1a
-        return -1;
+        return estimateResolutionHours(1,0);
     }
 
     public int estimateResolutionHours(int complexityFactor) {
-        // TODO #1b
-        return -1;
+
+        return estimateResolutionHours(complexityFactor,0);
     }
 
     public int estimateResolutionHours(int complexityFactor, int afterHoursPenalty) {
-        // TODO #1c
-        return -1;
+        if(complexityFactor <1 ){
+            throw new IllegalArgumentException("Complexity factor must be >= 1");
+        }
+        if(afterHoursPenalty <0){
+            throw new IllegalArgumentException("afterHours penalty must be >=0");
+        }
+        int base = ( 6 - priority) * 2 + daysOpen;
+
+        int estimate = base * complexityFactor + afterHoursPenalty;
+
+        return Math.max(1, estimate);
     }
+
 
     @Override
     public String toString() {
         return String.format("#%d (%s) pr=%d open=%dd score=%d est=%dh",
                 id, requester, priority, daysOpen, urgencyScore(), estimateResolutionHours());
     }
+
 }
