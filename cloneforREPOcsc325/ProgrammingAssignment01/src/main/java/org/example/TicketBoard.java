@@ -83,9 +83,24 @@ public class TicketBoard {
     // Return the Ticket with matching id, or null if not found.
     // Implement iterative binary search on the array.
     // ---------------------------------------------------------
-    public Ticket findByIdBinarySearch(int id) {
-        // TODO #5
-        return null;
+     public Ticket findByIdBinarySearch(int id) {
+        int left = 0;
+        int right = size - 1;  // last valid index
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            int midId = tickets[mid].getId();
+
+            if (midId == id) {
+                return tickets[mid];
+            } else if (midId < id) {
+                left = mid + 1;       // search right half
+            } else {
+                right = mid - 1;      // search left half
+            }
+        }
+        return null;  // not found , so this is just a basic binary search to be honest
     }
 
     // Utility: sort by ID ascending (already implemented)
@@ -102,4 +117,5 @@ public class TicketBoard {
             tickets[j + 1] = key;
         }
     }
+
 }
